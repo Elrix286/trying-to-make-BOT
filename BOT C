@@ -1,5 +1,16 @@
 global n1, n2, c, d
+
+from selenium import webdriver
+import time
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+answers = []
+
+
 my_Tuple = (), final_response = ()
+browser = webdriver.Chrome()
+browser.get('http://127.0.0.1:5600')
 
 from urllib2 import Request, urlopen
 
@@ -65,18 +76,6 @@ BOT_response = B_response.decode('utf-8')  # decoding the request response asked
 # this should get the response from the BOT for the required questions.
 
 
-# goimg to my hub
- hub = browser.find_element_by_xpath('//*[@id="side-meniu"]/div[1]/div/a[1]')
- hub.click()
- browser.implicitly_wait(5)
- 
- #reaching the NUmbers game
- game = browser.find_element_by_xpath('//*[i@id="sidebar-container"]/div/div[1]/div/a/span')
- game.click()
- 
- #now we have finally reached the Numbers game in air dc++
- 
-
 
 
 
@@ -85,31 +84,46 @@ from urllib2 import Request, urlopen
 
 request = Request('https://private-anon-69d48bae69-airdcpp.apiary-mock.com/events/0')
 
-my_Tuple = getORIGNUM()  # calling the function getORIGNUM() for the two numbers returned from the game
-
-response_body = urlopen(request).read()
-
-final_response = getsum(my_Tuple)
-
-print(final_response)
-
 
 # creating the getsum() function to calculate the sum of the two numbers inside the tuple returned
 
 def getsum():
  # function for  calculating the sum
 
- result = []                     # Step 1
- for i in my_Tuple:                    # Step 2
-     tmp_sum = 0                 # Step 3
-     for j in i:                 # Step 3
-         tmp_sum += j            # Step 4
-     result.append(tmp_sum)      # Step 5
+ result = []
+ for i in my_Tuple:
+     tmp_sum = 0
+     for j in i:
+         tmp_sum += j
+     result.append(tmp_sum)
 
      return result
 
 
+def execute():
+    i=10
+    my_Tuple = getORIGNUM()  # calling the function getORIGNUM() for the two numbers returned from the game
 
+    response_body = urlopen(request).read()
+
+    print(getsum())
+
+    while(i):
+        for res in result:
+
+         send = browser.find.element_by_xpath("//*[@id = 'sidebar-container']/div/div[2]/div/div[3]/div[1]/div[2]/div[1]/div/textarea")
+         send.send_keys(res)
+         click = browser.find_element_by_xpath("//*[@id = 'sidebar-container']/div/div[3]/div[1]/div[2]/div[2]/div[1]/i")
+         click.click()
+
+        i+=1
+        asnwers.clear()
+
+
+
+#ONLY PROBELEM IN LOGIC
+
+#how to get the numbers from the script?
 # function that will get the original numbers provided by the game Script
 def getORIG_NUM():
     c, d = Numbers.getNUM()  # like a function in the pre-scripted game code that should get the two arguments n1, n2 from the question asked.

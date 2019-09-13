@@ -65,6 +65,18 @@ BOT_response = B_response.decode('utf-8')  # decoding the request response asked
 # this should get the response from the BOT for the required questions.
 
 
+# goimg to my hub
+ hub = browser.find_element_by_xpath('//*[@id="side-meniu"]/div[1]/div/a[1]')
+ hub.click()
+ browser.implicitly_wait(5)
+ 
+ #reaching the NUmbers game
+ game = browser.find_element_by_xpath('//*[i@id="sidebar-container"]/div/div[1]/div/a/span')
+ game.click()
+ 
+ #now we have finally reached the Numbers game in air dc++
+ 
+
 
 
 

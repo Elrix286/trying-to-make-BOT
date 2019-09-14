@@ -2,11 +2,13 @@ global n1, n2, c, d
 
 from selenium import webdriver
 import time
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-answers = []
+from webdriver.support.ui import Select
+from webdriver.common.keys import Keys
+from webdriver.common.by import By
 
+answers = []
+getresp = {}
+response2 = {}
 
 my_Tuple = (), final_response = ()
 browser = webdriver.Chrome()
@@ -64,19 +66,34 @@ postRequest.add_header('Content-Type', 'application/json')
 def sendmessage():
     threading.Timer(60.0, sendmessage).start()
     response = urllib.request.urlopen(postRequest, json.dumps(message).encode('utf-8'))
+    sendm = {
+        "method": "POST",
+        "path": "/hubs/chat_message",
+        "callback_id": 1,
+        "data": {
+            "text": "Sent through WebSocket",
+            "hub_urls": ["adcs://myhub.com:4252"]
+        }
+    }
+
 
 
 sendmessage()
 
 # gettting the response from the BOT
+def getresponse(): # to get the response from the user that is the bot
 
-B_response = response.read()
-BOT_response = B_response.decode('utf-8')  # decoding the request response asked previously
+ B_response = response.read()
+ BOT_response = B_response.decode('utf-8')  # decoding the request response asked previously
+ getresp = {
+    "code": 200,
+    "callback_id": 1,
+    "data": {
+        "sent": 4
+    }
+ }
 
 # this should get the response from the BOT for the required questions.
-
-
-
 
 
 # code to get a response from the user. here the user should be the bot i am making. code to get the ANSWER
@@ -88,43 +105,37 @@ request = Request('https://private-anon-69d48bae69-airdcpp.apiary-mock.com/event
 # creating the getsum() function to calculate the sum of the two numbers inside the tuple returned
 
 def getsum():
- # function for  calculating the sum
+    # function for  calculating the sum
 
- result = []
- for i in my_Tuple:
-     tmp_sum = 0
-     for j in i:
-         tmp_sum += j
-     result.append(tmp_sum)
+    result = []
+    for i in my_Tuple:
+        tmp_sum = 0
+        for j in i:
+            tmp_sum += j
+        result.append(tmp_sum)
 
-     return result
+        return result
 
 
 def execute():
-    i=10
-    my_Tuple = getORIGNUM()  # calling the function getORIGNUM() for the two numbers returned from the game
+    i = 10  # playing upto 10 questions in the game
+    my_Tuple = getresponse()  # calling the function getORIGNUM() for the two numbers returned from the game
 
     response_body = urlopen(request).read()
 
     print(getsum())
+    getresponse()
 
-    while(i):
+    while (i):
         for res in result:
+            send = browser.find.element_by_xpath(
+                "//*[@id = 'sidebar-container']/div/div[2]/div/div[3]/div[1]/div[2]/div[1]/div/textarea")
+            send.send_keys(res)
+            click = browser.find_element_by_xpath(
+                "//*[@id = 'sidebar-container']/div/div[3]/div[1]/div[2]/div[2]/div[1]/i")
+            click.click()
 
-         send = browser.find.element_by_xpath("//*[@id = 'sidebar-container']/div/div[2]/div/div[3]/div[1]/div[2]/div[1]/div/textarea")
-         send.send_keys(res)
-         click = browser.find_element_by_xpath("//*[@id = 'sidebar-container']/div/div[3]/div[1]/div[2]/div[2]/div[1]/i")
-         click.click()
-
-        i+=1
-        asnwers.clear()
+        i += 1
+        answers.clear()
 
 
-
-#ONLY PROBELEM IN LOGIC
-
-#how to get the numbers from the script?
-# function that will get the original numbers provided by the game Script
-def getORIG_NUM():
-    c, d = Numbers.getNUM()  # like a function in the pre-scripted game code that should get the two arguments n1, n2 from the question asked.
-    return (c, d)  # returning as a tuple
